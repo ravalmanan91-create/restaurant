@@ -1,0 +1,3506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kathiyawadi Rasoi - Authentic Kathiyawadi Cuisine</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #e67e22;
+            --secondary-color: #f39c12;
+            --dark-color: #2c3e50;
+            --light-color: #f8f9fa;
+            --text-color: #333;
+            --accent-color: #c0392b;
+            --success-color: #27ae60;
+            --danger-color: #e74c3c;
+            --warning-color: #f39c12;
+            --info-color: #3498db;
+            --border-radius: 8px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: rgba(44, 62, 80, 0.95);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            color: var(--secondary-color);
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            color: white;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .cart-icon:hover {
+            color: var(--secondary-color);
+            transform: scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .btn {
+            padding: 0.5rem 1.2rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #d35400;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: white;
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .btn-info {
+            background-color: var(--info-color);
+            color: white;
+        }
+
+        .btn-warning {
+            background-color: var(--warning-color);
+            color: white;
+        }
+
+        /* Cart Sidebar */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background-color: white;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 2000;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-sidebar.active {
+            right: 0;
+        }
+
+        .cart-header {
+            padding: 20px;
+            background-color: var(--dark-color);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-header h2 {
+            font-size: 1.5rem;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-cart:hover {
+            color: var(--secondary-color);
+            transform: rotate(90deg);
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .cart-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .cart-item-price {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ddd;
+            background-color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .quantity-btn:hover {
+            background-color: var(--light-color);
+        }
+
+        .cart-item-remove {
+            color: var(--danger-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .cart-item-remove:hover {
+            transform: scale(1.2);
+        }
+
+        .cart-footer {
+            padding: 20px;
+            background-color: var(--light-color);
+            border-top: 1px solid #ddd;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .cart-total span:last-child {
+            color: var(--primary-color);
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--success-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .checkout-btn:hover {
+            background-color: #229954;
+            transform: translateY(-2px);
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+
+        .empty-cart i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #ddd;
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1500;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('b1.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding-top: 80px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.5s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            animation: fadeInUp 1s ease 1s both;
+        }
+
+        .btn-hero {
+            padding: 0.8rem 2rem;
+            font-size: 1.1rem;
+        }
+
+        /* About Section */
+        .about {
+            padding: 80px 0;
+            background-color: var(--light-color);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+        }
+
+        .about-content {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .about-image {
+            flex: 1;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Menu Section */
+        .menu {
+            padding: 80px 0;
+        }
+
+        .menu-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .menu-tab {
+            padding: 10px 20px;
+            margin: 0 10px;
+            background-color: #f1f1f1;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .menu-tab.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .menu-tab:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .menu-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .menu-item {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .menu-item.selected {
+            border: 2px solid var(--success-color);
+        }
+
+        .menu-item-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .menu-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .menu-item:hover .menu-item-image img {
+            transform: scale(1.1);
+        }
+
+        .menu-item-content {
+            padding: 20px;
+        }
+
+        .menu-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .menu-item-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .menu-item-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .menu-item-description {
+            margin-bottom: 15px;
+            color: #666;
+        }
+
+        .menu-item-action {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .rating {
+            color: var(--secondary-color);
+        }
+
+        /* Chef Section */
+        .chefs {
+            padding: 80px 0;
+            background-color: var(--light-color);
+        }
+
+        .chefs-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .chef-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .chef-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .chef-image {
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .chef-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .chef-card:hover .chef-image img {
+            transform: scale(1.1);
+        }
+
+        .chef-content {
+            padding: 20px;
+        }
+
+        .chef-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+
+        .chef-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .chef-bio {
+            margin-bottom: 15px;
+            color: #666;
+        }
+
+        .chef-social {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chef-social a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--light-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark-color);
+            transition: var(--transition);
+        }
+
+        .chef-social a:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Waiter Login Section */
+        .waiter-login {
+            padding: 80px 0;
+            background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(44, 62, 80, 0.9)), url('https://picsum.photos/seed/restaurant-staff/1920/800.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+
+        .waiter-login-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: var(--border-radius);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+
+        .remember-me input {
+            margin-right: 8px;
+        }
+
+        /* Order Tracking Section */
+        .order-tracking {
+            padding: 80px 0;
+            background-color: var(--light-color);
+        }
+
+        .tracking-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+        }
+
+        .tracking-form {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .tracking-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+
+        .tracking-status {
+            display: none;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            margin-top: 20px;
+        }
+
+        .tracking-status.active {
+            display: block;
+        }
+
+        .status-timeline {
+            position: relative;
+            margin: 30px 0;
+        }
+
+        .status-timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 20px;
+            height: 100%;
+            width: 2px;
+            background-color: #ddd;
+        }
+
+        .status-item {
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 20px;
+        }
+
+        .status-item::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 12px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background-color: #ddd;
+            border: 2px solid white;
+        }
+
+        .status-item.completed::before {
+            background-color: var(--success-color);
+        }
+
+        .status-item.active::before {
+            background-color: var(--primary-color);
+            animation: pulse 2s infinite;
+        }
+
+        .status-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .status-time {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Saturday Night Music Section */
+        .music-night {
+            padding: 80px 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://picsum.photos/seed/live-music/1920/800.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+        }
+
+        .music-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .music-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+        }
+
+        .music-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .music-details {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .music-detail {
+            text-align: center;
+        }
+
+        .music-detail i {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+
+        .music-detail h3 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+
+        .music-detail p {
+            font-size: 1rem;
+        }
+
+        /* Reviews Section */
+        .reviews {
+            padding: 80px 0;
+            background-color: var(--light-color);
+        }
+
+        .reviews-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .review-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .reviewer-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+
+        .reviewer-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .reviewer-info {
+            flex: 1;
+        }
+
+        .reviewer-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .review-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .review-rating {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        .review-text {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 80px 0;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .contact-info {
+            padding: 30px;
+            background-color: var(--light-color);
+            border-radius: var(--border-radius);
+        }
+
+        .contact-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .contact-item i {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-right: 15px;
+            margin-top: 5px;
+        }
+
+        .contact-item-text h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .contact-item-text p {
+            color: #666;
+        }
+
+        .contact-form {
+            padding: 30px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .contact-form h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+        }
+
+        .contact-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .contact-form .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid black;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            background-color: white;
+            color: var(--text-color);
+        }
+
+        .contact-form .form-control::placeholder {
+            color: #999;
+        }
+
+        .contact-form textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Table Reservation Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: rgb(12, 12, 12);
+            border-radius: var(--border-radius);
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-header {
+            padding: 20px;
+            background-color: var(--primary-color);
+            color: rgb(11, 10, 10)e;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            font-size: 1.5rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: rgb(10, 8, 8);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-footer {
+            padding: 20px;
+            background-color: var(--light-color);
+            border-top: 1px solid black;
+            text-align: right;
+        }
+
+        /* Waiter Dashboard */
+        .dashboard {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--light-color);
+            z-index: 2500;
+            overflow-y: auto;
+        }
+
+        .dashboard.active {
+            display: block;
+        }
+
+        .dashboard-header {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 20px 0;
+            box-shadow: var(--box-shadow);
+        }
+
+        .dashboard-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dashboard-nav h1 {
+            font-size: 1.8rem;
+        }
+
+        .dashboard-content {
+            padding: 30px 0;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .order-list {
+            list-style: none;
+        }
+
+        .order-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-preparing {
+            background-color: #cce5ff;
+            color: #004085;
+        }
+
+        .status-ready {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-delivered {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Service Tiles */
+        .service-tiles {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .service-tile {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-tile::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transform: scale(0);
+            transition: transform 0.5s ease;
+        }
+
+        .service-tile:hover::before {
+            transform: scale(1);
+        }
+
+        .service-tile:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-tile i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .service-tile h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .service-tile p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* New Order Modal */
+        .new-order-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .new-order-modal.active {
+            display: flex;
+        }
+
+        .new-order-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .new-order-header {
+            padding: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .new-order-body {
+            padding: 20px;
+        }
+
+        .order-summary {
+            background-color: var(--light-color);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-top: 20px;
+        }
+
+        .order-summary h3 {
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+
+        .order-item-list {
+            list-style: none;
+        }
+
+        .order-item-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .order-item-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Bill Modal */
+        .bill-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bill-modal.active {
+            display: flex;
+        }
+
+        .bill-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .bill-header {
+            padding: 20px;
+            background-color: var(--dark-color);
+            color: white;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .bill-body {
+            padding: 30px;
+        }
+
+        .bill-details {
+            margin-bottom: 30px;
+        }
+
+        .bill-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .bill-table th,
+        .bill-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid black;
+        }
+
+        .bill-table th {
+            background-color: var(--light-color);
+            font-weight: 600;
+        }
+
+        .bill-totals {
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .bill-totals div {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .bill-totals .grand-total {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            border-top: 2px solid #0f0e0e;
+            padding-top: 10px;
+        }
+
+        .bill-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        /* Update Status Modal */
+        .status-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .status-modal.active {
+            display: flex;
+        }
+
+        .status-content {
+            background-color: rgb(2, 2, 2);
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .status-header {
+            padding: 20px;
+            background-color: var(--info-color);
+            color: rgb(0, 0, 0);
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-body {
+            padding: 30px;
+        }
+
+        .status-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .status-option {
+            padding: 15px;
+            border: 2px solid #0c0c0c;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .status-option:hover {
+            border-color: var(--info-color);
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+
+        .status-option.selected {
+            border-color: var(--info-color);
+            background-color: rgba(52, 152, 219, 0.2);
+        }
+
+        .status-option i {
+            font-size: 1.5rem;
+            color: var(--info-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: rgb(5, 5, 5);
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+
+        .footer-column p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary-color);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgb(15, 14, 14);
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #0e0d0d;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--success-color);
+            color: rgb(7, 6, 6);
+            padding: 15px 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 4000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.error {
+            background-color: var(--danger-color);
+        }
+
+        .toast.warning {
+            background-color: var(--warning-color);
+        }
+
+        .toast.info {
+            background-color: var(--info-color);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(230, 126, 34, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(230, 126, 34, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(230, 126, 34, 0);
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            
+            .bill-content {
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .about-content {
+                flex-direction: column;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+
+            .service-tiles {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .menu-tabs {
+                flex-wrap: wrap;
+            }
+
+            .music-details {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .new-order-content {
+                width: 95%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .tracking-form {
+                flex-direction: column;
+            }
+
+            .service-tiles {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">
+                <i class="fas fa-utensils"></i>
+                Swad Kathiyawad No
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#chefs">Chefs</a></li>
+                <li><a href="#reviews">Reviews</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="user-actions">
+                <div class="cart-icon" id="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cart-count">0</span>
+                </div>
+                <a href="#waiter-login" class="btn btn-outline">Waiter Login</a>
+                <a href="#order-tracking" class="btn btn-primary">Track Order</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button class="close-cart" id="close-cart">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <div class="empty-cart">
+                <i class="fas fa-shopping-basket"></i>
+                <p>Your cart is empty</p>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total">₹0</span>
+            </div>
+            <button class="checkout-btn" id="checkout-btn">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-message">Item added to cart!</span>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Authentic Kathiyawadi Cuisine</h1>
+            <p>Experience the rich flavors of Gujarat in every bite</p>
+            <div class="hero-buttons">
+                <a href="#menu" class="btn btn-primary btn-hero">View Menu</a>
+                <a href="#" class="btn btn-outline btn-hero" id="book-table-btn">Book a Table</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>About Our Restaurant</h2>
+                <p>Discover the authentic taste of Kathiyawad with our traditional recipes passed down through generations</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>A Taste of Tradition</h3>
+                    <p>At Kathiyawadi Rasoi, we bring you the authentic flavors of the Kathiyawad region of Gujarat. Our recipes have been carefully preserved and passed down through generations, ensuring that every dish we serve is a true representation of this rich culinary heritage.</p>
+                    <p>Founded in 2010, our restaurant has become a destination for food lovers seeking an authentic Kathiyawadi experience. We use only the freshest ingredients and traditional cooking methods to create dishes that are both flavorful and nutritious.</p>
+                    <p>Whether you're a fan of spicy curries, sweet treats, or savory snacks, our extensive menu has something to satisfy every palate. Join us for a culinary journey through the heart of Kathiyawad.</p>
+                    <a href="#menu" class="btn btn-primary">Explore Our Menu</a>
+                </div>
+                <div class="about-image">
+                    <img src="b2.jpg" alt="Kathiyawadi Restaurant Interior">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="menu">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Menu</h2>
+                <p>Explore our authentic Kathiyawadi dishes, prepared with love and traditional spices</p>
+            </div>
+            <div class="menu-tabs">
+                <button class="menu-tab active" data-category="starters">Starters</button>
+                <button class="menu-tab" data-category="main-course">Main Course</button>
+                <button class="menu-tab" data-category="breads">Breads</button>
+                <button class="menu-tab" data-category="desserts">Desserts</button>
+                <button class="menu-tab" data-category="beverages">Beverages</button>
+            </div>
+            <div class="menu-content" id="menu-content">
+                <!-- Starters -->
+                <div class="menu-item" data-category="starters" data-id="1" data-name="Locho" data-price="120">
+                    <div class="menu-item-image">
+                        <img src="locho.jpg" alt="Locho">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3 class="menu-item-title">Locho</h3>
+                            <span class="menu-item-price">₹120</span>
+                        </div>
+                        <p class="menu-item-description">Soft and fluffy steamed gram flour snack, served with sev and chutney</p>
+                        <div class="menu-item-action">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <button class="btn btn-primary add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="starters" data-id="2" data-name="Ganthiya" data-price="100">
+                    <div class="menu-item-image">
+                        <img src="Gathiya.jpg" alt="Ganthiya">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3 class="menu-item-title">Ganthiya</h3>
+                            <span class="menu-item-price">₹100</span>
+                        </div>
+                        <p class="menu-item-description">Crispy fried gram flour snack, served with fried chilies and chutney</p>
+                        <div class="menu-item-action">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <button class="btn btn-primary add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="starters" data-id="3" data-name="Dhokla" data-price="110">
+                    <div class="menu-item-image">
+                        <img src="dhokla.jpg" alt="Dhokla">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3 class="menu-item-title">Dhokla</h3>
+                            <span class="menu-item-price">₹110</span>
+                        </div>
+                        <p class="menu-item-description">Steamed gram flour cake, tempered with mustard seeds and curry leaves</p>
+                        <div class="menu-item-action">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <button class="btn btn-primary add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Main Course -->
+                <div class="menu-item" data-category="main-course" data-id="4" data-name="Undhiyu" data-price="250">
+                    <div class="menu-item-image">
+                        <img src="Undhiyu.jpg" alt="Undhiyu">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3 class="menu-item-title">Undhiyu</h3>
+                            <span class="menu-item-price">₹250</span>
+                        </div>
+                        <p class="menu-item-description">Mixed vegetable curry with green garlic, methi muthia, and spices</p>
+                        <div class="menu-item-action">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <button class="btn btn-primary add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="main-course" data-id="5" data-name="Sev Tameta" data-price="180">
+                    <div class="menu-item-image">
+                        <img src="sevtameta.jpg" alt="Sev Tameta">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3 class="menu-item-title">Sev Tameta</h3>
+                            <span class="menu-item-price">₹180</span>
+                        </div>
+                        <p class="menu-item-description">Spicy tomato curry topped with crispy sev, a Kathiyawadi specialty</p>
+                        <div class="menu-item-action">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <button class="btn btn-primary add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="main-course" data-id="6" data-name="Bateta Shak" data-price="160">
+                    <div class="menu-item-image">
+                        <img src="bataka.jpg" alt="Bateta Shak">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3 class="menu-item-title">Bateta Shak</h3>
+                            <span class="menu-item-price">₹160</span>
+                        </div>
+                        <p class="menu-item-description">Spicy potato curry with garlic and traditional Kathiyawadi spices</p>
+                        <div class="menu-item-action">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <button class="btn btn-primary add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Breads -->
+                <div class="menu-item" data-category="breads" data-id="7" data-name="Bajra Rotla" data-price="40">
+                    <div class="menu-item-image">
+                        <img src="bajararoti.jpg" alt="Rotla">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3 class="menu-item-title">Bajra Rotla</h3>
+                            <span class="menu-item-price">₹40</span>
+                        </div>
+                        <p class="menu-item-description">Traditional millet flatbread, served with ghee and jaggery</p>
+                        <div class="menu-item-action">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <button class="btn btn-primary add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="breads" data-id="8" data-name="Fulka" data-price="25">
+                    <div class="menu-item-image">
+                        <img src="fulka.jpg" alt="Fulka">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3 class="menu-item-title">Fulka</h3>
+                            <span class="menu-item-price">₹25</span>
+                        </div>
+                        <p class="menu-item-description">Soft whole wheat flatbread, puffed to perfection</p>
+                        <div class="menu-item-action">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <button class="btn btn-primary add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="breads" data-id="9" data-name="Methi Thepla" data-price="35">
+                    <div class="menu-item-image">
+                        <img src="thepla.jpg" alt="Thepla">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3 class="menu-item-title">Methi Thepla</h3>
+                            <span class="menu-item-price">₹35</span>
+                        </div>
+                        <p class="menu-item-description">Fenugreek flatbread with spices, perfect for travel</p>
+                        <div class="menu-item-action">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <button class="btn btn-primary add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Desserts -->
+                <div class="menu-item" data-category="desserts" data-id="10" data-name="Jalebi" data-price="80">
+                    <div class="menu-item-image">
+                        <img src="jalebi.jpg" alt="Jalebi">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3 class="menu-item-title">Jalebi</h3>
+                            <span class="menu-item-price">₹80</span>
+                        </div>
+                        <p class="menu-item-description">Crispy sweet spirals soaked in sugar syrup</p>
+                        <div class="menu-item-action">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <button class="btn btn-primary add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="desserts" data-id="11" data-name="Malpua" data-price="90">
+                    <div class="menu-item-image">
+                        <img src="malpuva.jpg" alt="Malpua">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3 class="menu-item-title">Malpua</h3>
+                            <span class="menu-item-price">₹90</span>
+                        </div>
+                        <p class="menu-item-description">Sweet pancakes flavored with cardamom and saffron</p>
+                        <div class="menu-item-action">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <button class="btn btn-primary add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="desserts" data-id="12" data-name="Shrikhand" data-price="100">
+                    <div class="menu-item-image">
+                        <img src="sheikhand.jpg" alt="Shrikhand">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3 class="menu-item-title">Shrikhand</h3>
+                            <span class="menu-item-price">₹100</span>
+                        </div>
+                        <p class="menu-item-description">Sweet strained yogurt flavored with saffron and cardamom</p>
+                        <div class="menu-item-action">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <button class="btn btn-primary add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Beverages -->
+                <div class="menu-item" data-category="beverages" data-id="13" data-name="Masala Chaas" data-price="60">
+                    <div class="menu-item-image">
+                        <img src="chaas.jpg" alt="Chaas">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3 class="menu-item-title">Masala Chaas</h3>
+                            <span class="menu-item-price">₹60</span>
+                        </div>
+                        <p class="menu-item-description">Spiced buttermilk with cumin and mint</p>
+                        <div class="menu-item-action">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <button class="btn btn-primary add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="beverages" data-id="14" data-name="Aam Ras" data-price="120">
+                    <div class="menu-item-image">
+                        <img src="ras.jpg" alt="Aam Ras">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3 class="menu-item-title">Aam Ras</h3>
+                            <span class="menu-item-price">₹120</span>
+                        </div>
+                        <p class="menu-item-description">Sweet mango pulp, a seasonal delicacy</p>
+                        <div class="menu-item-action">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <button class="btn btn-primary add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="beverages" data-id="15" data-name="Sweet Lassi" data-price="80">
+                    <div class="menu-item-image">
+                        <img src="lassi.jpg" alt="Lassi">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3 class="menu-item-title">Sweet Lassi</h3>
+                            <span class="menu-item-price">₹80</span>
+                        </div>
+                        <p class="menu-item-description">Creamy yogurt drink with cardamom and nuts</p>
+                        <div class="menu-item-action">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <button class="btn btn-primary add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chef Section -->
+    <section id="chefs" class="chefs">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Master Chefs</h2>
+                <p>Meet the culinary experts who bring authentic Kathiyawadi flavors to your plate</p>
+            </div>
+            <div class="chefs-container">
+                <div class="chef-card">
+                    <div class="chef-image">
+                        <img src="c1.jpg" alt="Chef Rajesh Patel">
+                    </div>
+                    <div class="chef-content">
+                        <h3 class="chef-name">Chef Rajesh Patel</h3>
+                        <p class="chef-title">Head Chef & Founder</p>
+                        <p class="chef-bio">With over 25 years of experience in Kathiyawadi cuisine, Chef Rajesh brings authentic recipes passed down through generations. His passion for traditional cooking methods and local ingredients has made our restaurant a destination for food lovers.</p>
+                        <div class="chef-social">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="chef-card">
+                    <div class="chef-image">
+                        <img src="c2.jpg" alt="Chef Meena Joshi">
+                    </div>
+                    <div class="chef-content">
+                        <h3 class="chef-name">Chef Meena Joshi</h3>
+                        <p class="chef-title">Executive Chef</p>
+                        <p class="chef-bio">Specializing in traditional Kathiyawadi sweets and snacks, Chef Meena brings a feminine touch to our menu. Her expertise in balancing flavors and creating visually appealing dishes has earned her recognition in the culinary world.</p>
+                        <div class="chef-social">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="chef-card">
+                    <div class="chef-image">
+                        <img src="c3.jpg" alt="Chef Vikram Singh">
+                    </div>
+                    <div class="chef-content">
+                        <h3 class="chef-name">Chef Vikram Singh</h3>
+                        <p class="chef-title">Sous Chef</p>
+                        <p class="chef-bio">With a background in both traditional and modern cooking techniques, Chef Vikram brings innovation to our classic Kathiyawadi dishes. His creative approach to presentation has elevated our dining experience to new heights.</p>
+                        <div class="chef-social">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Waiter Login Section -->
+    <section id="waiter-login" class="waiter-login">
+        <div class="container">
+            <div class="section-title">
+                <h2 style="color: rgb(10, 10, 10);">Waiter Portal</h2>
+                <p style="color: rgba(9, 9, 9, 0.9);">Access your dashboard to manage orders and tables</p>
+            </div>
+            <div class="waiter-login-container">
+                <form id="waiter-login-form">
+                    <div class="form-group">
+                        <label for="waiter-id">Waiter ID</label>
+                        <input type="text" id="waiter-id" class="form-control" placeholder="Enter your waiter ID" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+                    </div>
+                    <div class="form-actions">
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember-me">
+                            <label for="remember-me">Remember me</label>
+                        </div>
+                        <a href="#" style="color: var(--secondary-color);">Forgot Password?</a>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px;">Login</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Tracking Section -->
+    <section id="order-tracking" class="order-tracking">
+        <div class="container">
+            <div class="section-title">
+                <h2>Track Your Order</h2>
+                <p>Enter your order ID to check the status of your delivery</p>
+            </div>
+            <div class="tracking-container">
+                <div class="tracking-form">
+                    <input type="text" class="tracking-input" id="order-id" placeholder="Enter your order ID">
+                    <button class="btn btn-primary" id="track-order-btn">Track Order</button>
+                </div>
+                <div class="tracking-status" id="tracking-status">
+                    <h3>Order #KAT12345</h3>
+                    <div class="status-timeline">
+                        <div class="status-item completed">
+                            <div class="status-title">Order Placed</div>
+                            <div class="status-time">Today, 12:30 PM</div>
+                        </div>
+                        <div class="status-item completed">
+                            <div class="status-title">Order Confirmed</div>
+                            <div class="status-time">Today, 12:35 PM</div>
+                        </div>
+                        <div class="status-item completed">
+                            <div class="status-title">Preparing Your Food</div>
+                            <div class="status-time">Today, 12:40 PM</div>
+                        </div>
+                        <div class="status-item active">
+                            <div class="status-title">Out for Delivery</div>
+                            <div class="status-time">Today, 1:05 PM</div>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-title">Delivered</div>
+                            <div class="status-time">Expected by 1:30 PM</div>
+                        </div>
+                    </div>
+                    <div class="delivery-details">
+                        <h4>Delivery Details</h4>
+                        <p><strong>Delivery Partner:</strong> Ramesh Kumar</p>
+                        <p><strong>Contact:</strong> +91 9876543210</p>
+                        <p><strong>Estimated Delivery Time:</strong> 25 minutes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Saturday Night Music Section -->
+    <section class="music-night">
+        <div class="container">
+            <div class="music-content">
+                <h2>Saturday Night Live Music</h2>
+                <p>Join us every Saturday evening for an unforgettable dining experience accompanied by live traditional music</p>
+                <div class="music-details">
+                    <div class="music-detail">
+                        <i class="fas fa-music"></i>
+                        <h3>Live Folk Music</h3>
+                        <p>Traditional Kathiyawadi folk performances</p>
+                    </div>
+                    <div class="music-detail">
+                        <i class="fas fa-clock"></i>
+                        <h3>7:00 PM - 10:00 PM</h3>
+                        <p>Every Saturday evening</p>
+                    </div>
+                    <div class="music-detail">
+                        <i class="fas fa-guitar"></i>
+                        <h3>Local Artists</h3>
+                        <p>Talented musicians from the region</p>
+                    </div>
+                </div>
+                <a href="#" class="btn btn-primary btn-hero" id="reserve-music-btn">Reserve Your Table</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="reviews">
+        <div class="container">
+            <div class="section-title">
+                <h2>Customer Reviews</h2>
+                <p>See what our customers have to say about their dining experience</p>
+            </div>
+            <div class="reviews-container">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-image">
+                            <img src="https://picsum.photos/seed/reviewer-1/100/100.jpg" alt="Priya Sharma">
+                        </div>
+                        <div class="reviewer-info">
+                            <h4 class="reviewer-name">Priya Sharma</h4>
+                            <p class="review-date">2 weeks ago</p>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">Absolutely loved the authentic Kathiyawadi food here! The Undhiyu was just like my grandmother's recipe. The ambiance is perfect for a family dinner, and the staff is very courteous. Will definitely visit again!</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-image">
+                            <img src="https://picsum.photos/seed/reviewer-2/100/100.jpg" alt="Amit Patel">
+                        </div>
+                        <div class="reviewer-info">
+                            <h4 class="reviewer-name">Amit Patel</h4>
+                            <p class="review-date">1 month ago</p>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="review-text">The Sev Tameta here is exceptional! It has the perfect balance of spices and the sev is crispy. The Bajra Rotla with ghee and jaggery is a must-try. The Saturday night live music adds to the wonderful dining experience.</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-image">
+                            <img src="https://picsum.photos/seed/reviewer-3/100/100.jpg" alt="Neha Desai">
+                        </div>
+                        <div class="reviewer-info">
+                            <h4 class="reviewer-name">Neha Desai</h4>
+                            <p class="review-date">1 month ago</p>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">I hosted my parents' anniversary dinner here, and it was a memorable experience. The staff went out of their way to make it special. The food was delicious, and the traditional Kathiyawadi thali was a hit with everyone. Highly recommend!</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-image">
+                            <img src="https://picsum.photos/seed/reviewer-4/100/100.jpg" alt="Rahul Mehta">
+                        </div>
+                        <div class="reviewer-info">
+                            <h4 class="reviewer-name">Rahul Mehta</h4>
+                            <p class="review-date">2 months ago</p>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                    <p class="review-text">Great place for authentic Kathiyawadi cuisine. The Locho and Ganthiya are perfect starters. The service is prompt, and the prices are reasonable. The only issue was the waiting time on weekends, but it's worth the wait!</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-image">
+                            <img src="https://picsum.photos/seed/reviewer-5/100/100.jpg" alt="Kavita Joshi">
+                        </div>
+                        <div class="reviewer-info">
+                            <h4 class="reviewer-name">Kavita Joshi</h4>
+                            <p class="review-date">2 months ago</p>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">The desserts here are to die for! The Shrikhand and Jalebi are the best I've had in the city. The ambiance is warm and welcoming, and the staff is knowledgeable about the dishes. A must-visit for anyone who loves Kathiyawadi food!</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-image">
+                            <img src="https://picsum.photos/seed/reviewer-6/100/100.jpg" alt="Sanjay Shah">
+                        </div>
+                        <div class="reviewer-info">
+                            <h4 class="reviewer-name">Sanjay Shah</h4>
+                            <p class="review-date">3 months ago</p>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="review-text">I've been a regular here since they opened, and the quality has always been consistent. The Bateta Shak and Fulka combination is my comfort food. The online ordering system is user-friendly, and the delivery is always on time. Great job!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contact Us</h2>
+                <p>Get in touch with us for reservations, feedback, or any queries</p>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Restaurant Information</h3>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div class="contact-item-text">
+                            <h4>Address</h4>
+                            <p>123, Kathiyawad Chowk, Near Gandhi Circle, Rajkot, Gujarat 360001</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <div class="contact-item-text">
+                            <h4>Phone</h4>
+                            <p>+91 98765 43210</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div class="contact-item-text">
+                            <h4>Email</h4>
+                            <p>info@kathiyawadirasoi.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div class="contact-item-text">
+                            <h4>Opening Hours</h4>
+                            <p>Monday - Friday: 11:00 AM - 11:00 PM</p>
+                            <p>Saturday - Sunday: 11:00 AM - 12:00 AM</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>Send Us a Message</h3>
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" class="form-control" placeholder="Your Phone" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About Kathiyawadi Rasoi</h3>
+                    <p>Experience the authentic flavors of Kathiyawad at our restaurant. We bring you traditional recipes passed down through generations, prepared with love and the finest ingredients.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#menu">Menu</a></li>
+                        <li><a href="#chefs">Our Chefs</a></li>
+                        <li><a href="#reviews">Reviews</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Dine-in</a></li>
+                        <li><a href="#">Online Ordering</a></li>
+                        <li><a href="#">Catering Services</a></li>
+                        <li><a href="#">Private Events</a></li>
+                        <li><a href="#">Gift Cards</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe to our newsletter to receive updates on special offers and new dishes.</p>
+                    <form id="newsletter-form">
+                        <div class="form-group" style="display: flex; margin-top: 15px;">
+                            <input type="email" class="form-control" placeholder="Your Email" style="border-radius: 4px 0 0 4px;">
+                            <button type="submit" class="btn btn-primary" style="border-radius: 0 4px 4px 0;">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Kathiyawadi Rasoi. All Rights Reserved. Designed with <i class="fas fa-heart" style="color: var(--accent-color);"></i> by Kathiyawadi Rasoi Team</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Table Reservation Modal -->
+    <div class="modal" id="reservation-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Reserve Your Table</h2>
+                <button class="modal-close" id="close-reservation">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="reservation-form">
+                    <div class="form-group">
+                        <label for="res-name">Name</label>
+                        <input type="text" class="form-control" id="res-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="res-email">Email</label>
+                        <input type="email" class="form-control" id="res-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="res-phone">Phone</label>
+                        <input type="tel" class="form-control" id="res-phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="res-date">Date</label>
+                        <input type="date" class="form-control" id="res-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="res-time">Time</label>
+                        <input type="time" class="form-control" id="res-time" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="res-guests">Number of Guests</label>
+                        <select class="form-control" id="res-guests" required>
+                            <option value="">Select guests</option>
+                            <option value="1">1 Person</option>
+                            <option value="2">2 People</option>
+                            <option value="3">3 People</option>
+                            <option value="4">4 People</option>
+                            <option value="5">5 People</option>
+                            <option value="6">6 People</option>
+                            <option value="more">More than 6</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="res-special">Special Requests (Optional)</label>
+                        <textarea class="form-control" id="res-special" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" id="cancel-reservation">Cancel</button>
+                <button type="submit" form="reservation-form" class="btn btn-primary">Confirm Reservation</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Waiter Dashboard -->
+    <div class="dashboard" id="waiter-dashboard">
+        <div class="dashboard-header">
+            <div class="container">
+                <div class="dashboard-nav">
+                    <h1>Waiter Dashboard</h1>
+                    <div>
+                        <span id="waiter-name">Welcome, Waiter</span>
+                        <button class="btn btn-outline" id="logout-btn" style="margin-left: 20px;">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="dashboard-content">
+            <div class="container">
+                <!-- Service Tiles -->
+                <div class="service-tiles">
+                    <div class="service-tile" id="take-order-tile">
+                        <i class="fas fa-utensils"></i>
+                        <h3>Take New Order</h3>
+                        <p>Add items from menu to create new order</p>
+                    </div>
+                    <div class="service-tile" id="update-status-tile">
+                        <i class="fas fa-sync-alt"></i>
+                        <h3>Update Order Status</h3>
+                        <p>Change status of existing orders</p>
+                    </div>
+                    <div class="service-tile" id="generate-bill-tile">
+                        <i class="fas fa-file-invoice"></i>
+                        <h3>Generate Bill</h3>
+                        <p>Create and manage customer bills</p>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h3>Active Orders</h3>
+                        <ul class="order-list" id="active-orders">
+                            <li class="order-item">
+                                <div>
+                                    <strong>Table #5</strong>
+                                    <p>2x Undhiyu, 4x Bajra Rotla</p>
+                                </div>
+                                <span class="order-status status-preparing">Preparing</span>
+                            </li>
+                            <li class="order-item">
+                                <div>
+                                    <strong>Table #8</strong>
+                                    <p>1x Sev Tameta, 1x Fulka</p>
+                                </div>
+                                <span class="order-status status-ready">Ready</span>
+                            </li>
+                            <li class="order-item">
+                                <div>
+                                    <strong>Online Order #123</strong>
+                                    <p>Family Thali, 1x Lassi</p>
+                                </div>
+                                <span class="order-status status-pending">Pending</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3>Table Status</h3>
+                        <ul class="order-list">
+                            <li class="order-item">
+                                <div>
+                                    <strong>Table #1</strong>
+                                    <p>4 Guests</p>
+                                </div>
+                                <span class="order-status status-delivered">Occupied</span>
+                            </li>
+                            <li class="order-item">
+                                <div>
+                                    <strong>Table #2</strong>
+                                    <p>Available</p>
+                                </div>
+                                <span class="order-status status-ready">Free</span>
+                            </li>
+                            <li class="order-item">
+                                <div>
+                                    <strong>Table #3</strong>
+                                    <p>2 Guests</p>
+                                </div>
+                                <span class="order-status status-delivered">Occupied</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3>Today's Stats</h3>
+                        <ul class="order-list">
+                            <li class="order-item">
+                                <div>
+                                    <strong>Total Orders</strong>
+                                </div>
+                                <span>24</span>
+                            </li>
+                            <li class="order-item">
+                                <div>
+                                    <strong>Revenue</strong>
+                                </div>
+                                <span>₹8,450</span>
+                            </li>
+                            <li class="order-item">
+                                <div>
+                                    <strong>Average Order Value</strong>
+                                </div>
+                                <span>₹352</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Order Modal -->
+    <div class="new-order-modal" id="new-order-modal">
+        <div class="new-order-content">
+            <div class="new-order-header">
+                <h2>Take New Order</h2>
+                <button class="modal-close" id="close-new-order">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="new-order-body">
+                <div class="form-group">
+                    <label for="table-number">Table Number</label>
+                    <select class="form-control" id="table-number">
+                        <option value="">Select Table</option>
+                        <option value="1">Table #1</option>
+                        <option value="2">Table #2</option>
+                        <option value="3">Table #3</option>
+                        <option value="4">Table #4</option>
+                        <option value="5">Table #5</option>
+                        <option value="6">Table #6</option>
+                        <option value="7">Table #7</option>
+                        <option value="8">Table #8</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="customer-name">Customer Name</label>
+                    <input type="text" class="form-control" id="customer-name" placeholder="Enter customer name">
+                </div>
+
+                <h3>Select Menu Items</h3>
+                <div class="menu-tabs">
+                    <button class="menu-tab active" data-category="starters">Starters</button>
+                    <button class="menu-tab" data-category="main-course">Main Course</button>
+                    <button class="menu-tab" data-category="breads">Breads</button>
+                    <button class="menu-tab" data-category="desserts">Desserts</button>
+                    <button class="menu-tab" data-category="beverages">Beverages</button>
+                </div>
+                
+                <div class="menu-content" id="order-menu-content" style="max-height: 400px; overflow-y: auto;">
+                    <!-- Menu items will be populated here -->
+                </div>
+
+                <div class="order-summary">
+                    <h3>Order Summary</h3>
+                    <ul class="order-item-list" id="order-summary-list">
+                        <li>No items selected</li>
+                    </ul>
+                    <div style="text-align: right; margin-top: 15px;">
+                        <strong>Total: ₹<span id="order-total">0</span></strong>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" id="cancel-order">Cancel</button>
+                <button type="button" class="btn btn-primary" id="confirm-order">Confirm Order</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bill Modal -->
+    <div class="bill-modal" id="bill-modal">
+        <div class="bill-content">
+            <div class="bill-header">
+                <h2>Generate Bill</h2>
+                <button class="modal-close" id="close-bill">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="bill-body">
+                <div class="form-group">
+                    <label for="bill-table">Select Table/Order</label>
+                    <select class="form-control" id="bill-table">
+                        <option value="">Select Order</option>
+                        <option value="5">Table #5 - Order #ORD001</option>
+                        <option value="8">Table #8 - Order #ORD002</option>
+                        <option value="online123">Online Order #123</option>
+                    </select>
+                </div>
+
+                <div class="bill-details" id="bill-details" style="display: none;">
+                    <h3>Bill Details</h3>
+                    <table class="bill-table">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Qty</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bill-items">
+                            <tr>
+                                <td>Undhiyu</td>
+                                <td>2</td>
+                                <td>₹250</td>
+                                <td>₹500</td>
+                            </tr>
+                            <tr>
+                                <td>Bajra Rotla</td>
+                                <td>4</td>
+                                <td>₹40</td>
+                                <td>₹160</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="bill-totals">
+                        <div>Subtotal: ₹660</div>
+                        <div>GST (5%): ₹33</div>
+                        <div>Service Charge (10%): ₹66</div>
+                        <div class="grand-total">Grand Total: ₹759</div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 20px;">
+                        <label for="payment-mode">Payment Mode</label>
+                        <select class="form-control" id="payment-mode">
+                            <option value="cash">Cash</option>
+                            <option value="card">Card</option>
+                            <option value="upi">UPI</option>
+                            <option value="online">Online</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer no-print">
+                <button type="button" class="btn btn-info" id="edit-bill">Edit Bill</button>
+                <button type="button" class="btn btn-success" id="print-bill">Print Bill</button>
+                <button type="button" class="btn btn-primary" id="finalize-bill">Finalize Bill</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Status Modal -->
+    <div class="status-modal" id="status-modal">
+        <div class="status-content">
+            <div class="status-header">
+                <h2>Update Order Status</h2>
+                <button class="modal-close" id="close-status">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="status-body">
+                <div class="form-group">
+                    <label for="status-order">Select Order</label>
+                    <select class="form-control" id="status-order">
+                        <option value="">Select Order</option>
+                        <option value="ord1">Table #5 - Order #ORD001</option>
+                        <option value="ord2">Table #8 - Order #ORD002</option>
+                        <option value="ord3">Online Order #123</option>
+                    </select>
+                </div>
+
+                <h3>Select New Status</h3>
+                <div class="status-options">
+                    <div class="status-option" data-status="pending">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <strong>Pending</strong>
+                            <p>Order received, awaiting confirmation</p>
+                        </div>
+                    </div>
+                    <div class="status-option" data-status="confirmed">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Confirmed</strong>
+                            <p>Order confirmed and in queue</p>
+                        </div>
+                    </div>
+                    <div class="status-option" data-status="preparing">
+                        <i class="fas fa-fire"></i>
+                        <div>
+                            <strong>Preparing</strong>
+                            <p>Chef is preparing the order</p>
+                        </div>
+                    </div>
+                    <div class="status-option" data-status="ready">
+                        <i class="fas fa-thumbs-up"></i>
+                        <div>
+                            <strong>Ready</strong>
+                            <p>Order is ready for serving/delivery</p>
+                        </div>
+                    </div>
+                    <div class="status-option" data-status="served">
+                        <i class="fas fa-utensils"></i>
+                        <div>
+                            <strong>Served</strong>
+                            <p>Order has been served to customer</p>
+                        </div>
+                    </div>
+                    <div class="status-option" data-status="completed">
+                        <i class="fas fa-check-double"></i>
+                        <div>
+                            <strong>Completed</strong>
+                            <p>Order completed successfully</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" id="cancel-status">Cancel</button>
+                <button type="button" class="btn btn-primary" id="update-status-btn">Update Status</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Shopping Cart Functionality
+        let cart = [];
+        let orderItems = [];
+        
+        // DOM Elements
+        const cartIcon = document.getElementById('cart-icon');
+        const cartSidebar = document.getElementById('cart-sidebar');
+        const closeCart = document.getElementById('close-cart');
+        const overlay = document.getElementById('overlay');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartCount = document.getElementById('cart-count');
+        const cartTotal = document.getElementById('cart-total');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
+
+        // Show Toast Notification
+        function showToast(message, type = 'success') {
+            toastMessage.textContent = message;
+            toast.className = `toast show ${type}`;
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Update Cart Display
+        function updateCart() {
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="empty-cart">
+                        <i class="fas fa-shopping-basket"></i>
+                        <p>Your cart is empty</p>
+                    </div>
+                `;
+                cartCount.textContent = '0';
+                cartTotal.textContent = '₹0';
+            } else {
+                let html = '';
+                let total = 0;
+                let itemCount = 0;
+
+                cart.forEach(item => {
+                    html += `
+                        <div class="cart-item">
+                            <div class="cart-item-image">
+                                <img src="https://picsum.photos/seed/${item.name}/80/80.jpg" alt="${item.name}">
+                            </div>
+                            <div class="cart-item-details">
+                                <div class="cart-item-title">${item.name}</div>
+                                <div class="cart-item-price">₹${item.price}</div>
+                                <div class="cart-item-quantity">
+                                    <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+                                    <span>${item.quantity}</span>
+                                    <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                                </div>
+                            </div>
+                            <i class="fas fa-trash cart-item-remove" onclick="removeFromCart(${item.id})"></i>
+                        </div>
+                    `;
+                    total += item.price * item.quantity;
+                    itemCount += item.quantity;
+                });
+
+                cartItemsContainer.innerHTML = html;
+                cartCount.textContent = itemCount;
+                cartTotal.textContent = `₹${total}`;
+            }
+        }
+
+        // Add to Cart
+        function addToCart(id, name, price) {
+            const existingItem = cart.find(item => item.id === id);
+            
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ id, name, price, quantity: 1 });
+            }
+            
+            updateCart();
+            showToast(`${name} added to cart!`);
+        }
+
+        // Update Quantity
+        function updateQuantity(id, change) {
+            const item = cart.find(item => item.id === id);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(id);
+                } else {
+                    updateCart();
+                }
+            }
+        }
+
+        // Remove from Cart
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            updateCart();
+            showToast('Item removed from cart', 'warning');
+        }
+
+        // Cart Event Listeners
+        cartIcon.addEventListener('click', () => {
+            cartSidebar.classList.add('active');
+            overlay.classList.add('active');
+        });
+
+        closeCart.addEventListener('click', () => {
+            cartSidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        overlay.addEventListener('click', () => {
+            cartSidebar.classList.remove('active');
+            overlay.classList.remove('active');
+            document.querySelectorAll('.modal.active, .new-order-modal.active, .bill-modal.active, .status-modal.active').forEach(modal => {
+                modal.classList.remove('active');
+            });
+        });
+
+        // Add to Cart Buttons
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const menuItem = e.target.closest('.menu-item');
+                const id = parseInt(menuItem.dataset.id);
+                const name = menuItem.dataset.name;
+                const price = parseInt(menuItem.dataset.price);
+                
+                addToCart(id, name, price);
+            });
+        });
+
+        // Checkout
+        checkoutBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                showToast('Your cart is empty!', 'error');
+                return;
+            }
+            
+            showToast('Processing your order...');
+            setTimeout(() => {
+                cart = [];
+                updateCart();
+                cartSidebar.classList.remove('active');
+                overlay.classList.remove('active');
+                showToast('Order placed successfully! Order ID: #KAT' + Math.floor(Math.random() * 100000));
+            }, 2000);
+        });
+
+        // Menu Tabs
+        const menuTabs = document.querySelectorAll('.menu-tab');
+        const menuItems = document.querySelectorAll('.menu-item');
+
+        menuTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                menuTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                const category = tab.getAttribute('data-category');
+                
+                menuItems.forEach(item => {
+                    if (item.getAttribute('data-category') === category) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Initially show only starters
+        document.addEventListener('DOMContentLoaded', () => {
+            menuItems.forEach(item => {
+                if (item.getAttribute('data-category') !== 'starters') {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Waiter Login
+        document.getElementById('waiter-login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const waiterId = document.getElementById('waiter-id').value;
+            const password = document.getElementById('password').value;
+            
+            // Simple validation (in a real app, this would be server-side)
+            if (waiterId && password) {
+                // Show dashboard
+                document.getElementById('waiter-dashboard').classList.add('active');
+                document.getElementById('waiter-name').textContent = `Welcome, ${waiterId}`;
+                
+                // Reset form
+                document.getElementById('waiter-login-form').reset();
+                
+                showToast('Login successful!');
+            }
+        });
+
+        // Logout
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            document.getElementById('waiter-dashboard').classList.remove('active');
+            showToast('Logged out successfully');
+        });
+
+        // Service Tiles Functionality
+        document.getElementById('take-order-tile').addEventListener('click', () => {
+            document.getElementById('new-order-modal').classList.add('active');
+            overlay.classList.add('active');
+            populateOrderMenu();
+        });
+
+        document.getElementById('update-status-tile').addEventListener('click', () => {
+            document.getElementById('status-modal').classList.add('active');
+            overlay.classList.add('active');
+        });
+
+        document.getElementById('generate-bill-tile').addEventListener('click', () => {
+            document.getElementById('bill-modal').classList.add('active');
+            overlay.classList.add('active');
+        });
+
+        // New Order Modal
+        function populateOrderMenu() {
+            const orderMenuContent = document.getElementById('order-menu-content');
+            let html = '';
+            
+            // Clone menu items for order modal
+            document.querySelectorAll('.menu-item').forEach(item => {
+                const category = item.dataset.category;
+                if (category === 'starters') { // Initially show starters
+                    html += item.outerHTML;
+                }
+            });
+            
+            orderMenuContent.innerHTML = html;
+            
+            // Add click handlers for menu items in order modal
+            orderMenuContent.querySelectorAll('.menu-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    item.classList.toggle('selected');
+                    updateOrderSummary();
+                });
+            });
+        }
+
+        // Update Order Summary
+        function updateOrderSummary() {
+            const selectedItems = document.querySelectorAll('#order-menu-content .menu-item.selected');
+            const summaryList = document.getElementById('order-summary-list');
+            let total = 0;
+            
+            if (selectedItems.length === 0) {
+                summaryList.innerHTML = '<li>No items selected</li>';
+            } else {
+                let html = '';
+                selectedItems.forEach(item => {
+                    const name = item.dataset.name;
+                    const price = parseInt(item.dataset.price);
+                    total += price;
+                    html += `<li>${name} - ₹${price}</li>`;
+                });
+                summaryList.innerHTML = html;
+            }
+            
+            document.getElementById('order-total').textContent = total;
+        }
+
+        // Order Modal Tabs
+        document.querySelectorAll('#new-order-modal .menu-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('#new-order-modal .menu-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                const category = tab.getAttribute('data-category');
+                const orderMenuContent = document.getElementById('order-menu-content');
+                let html = '';
+                
+                document.querySelectorAll('.menu-item').forEach(item => {
+                    if (item.dataset.category === category) {
+                        html += item.outerHTML;
+                    }
+                });
+                
+                orderMenuContent.innerHTML = html;
+                
+                // Re-add click handlers
+                orderMenuContent.querySelectorAll('.menu-item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        item.classList.toggle('selected');
+                        updateOrderSummary();
+                    });
+                });
+            });
+        });
+
+        // Close Modals
+        document.getElementById('close-new-order').addEventListener('click', () => {
+            document.getElementById('new-order-modal').classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        document.getElementById('cancel-order').addEventListener('click', () => {
+            document.getElementById('new-order-modal').classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        document.getElementById('confirm-order').addEventListener('click', () => {
+            const tableNumber = document.getElementById('table-number').value;
+            const customerName = document.getElementById('customer-name').value;
+            const selectedItems = document.querySelectorAll('#order-menu-content .menu-item.selected');
+            
+            if (!tableNumber || selectedItems.length === 0) {
+                showToast('Please select table and at least one item', 'error');
+                return;
+            }
+            
+            showToast('Order confirmed successfully!');
+            document.getElementById('new-order-modal').classList.remove('active');
+            overlay.classList.remove('active');
+            
+            // Reset form
+            document.getElementById('table-number').value = '';
+            document.getElementById('customer-name').value = '';
+            document.querySelectorAll('#order-menu-content .menu-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            updateOrderSummary();
+        });
+
+        // Bill Modal
+        document.getElementById('close-bill').addEventListener('click', () => {
+            document.getElementById('bill-modal').classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        document.getElementById('bill-table').addEventListener('change', () => {
+            const selectedTable = document.getElementById('bill-table').value;
+            if (selectedTable) {
+                document.getElementById('bill-details').style.display = 'block';
+                showToast('Bill details loaded');
+            } else {
+                document.getElementById('bill-details').style.display = 'none';
+            }
+        });
+
+        document.getElementById('edit-bill').addEventListener('click', () => {
+            showToast('Edit mode activated - You can now modify quantities');
+        });
+
+        document.getElementById('print-bill').addEventListener('click', () => {
+            window.print();
+            showToast('Printing bill...');
+        });
+
+        document.getElementById('finalize-bill').addEventListener('click', () => {
+            const paymentMode = document.getElementById('payment-mode').value;
+            showToast(`Bill finalized with ${paymentMode} payment`);
+            document.getElementById('bill-modal').classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        // Status Modal
+        document.getElementById('close-status').addEventListener('click', () => {
+            document.getElementById('status-modal').classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        document.getElementById('cancel-status').addEventListener('click', () => {
+            document.getElementById('status-modal').classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        // Status Options
+        document.querySelectorAll('.status-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.status-option').forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+            });
+        });
+
+        document.getElementById('update-status-btn').addEventListener('click', () => {
+            const selectedOrder = document.getElementById('status-order').value;
+            const selectedStatus = document.querySelector('.status-option.selected');
+            
+            if (!selectedOrder || !selectedStatus) {
+                showToast('Please select order and status', 'error');
+                return;
+            }
+            
+            const status = selectedStatus.dataset.status;
+            showToast(`Order status updated to ${status}`);
+            document.getElementById('status-modal').classList.remove('active');
+            overlay.classList.remove('active');
+            
+            // Reset selections
+            document.getElementById('status-order').value = '';
+            document.querySelectorAll('.status-option').forEach(opt => opt.classList.remove('selected'));
+        });
+
+        // Order Tracking
+        document.getElementById('track-order-btn').addEventListener('click', () => {
+            const orderId = document.getElementById('order-id').value;
+            
+            if (orderId) {
+                document.getElementById('tracking-status').classList.add('active');
+                document.getElementById('tracking-status').scrollIntoView({ behavior: 'smooth' });
+                showToast('Order status updated!');
+            } else {
+                showToast('Please enter an order ID', 'error');
+            }
+        });
+
+        // Table Reservation Modal
+        const reservationModal = document.getElementById('reservation-modal');
+        const bookTableBtn = document.getElementById('book-table-btn');
+        const reserveMusicBtn = document.getElementById('reserve-music-btn');
+        const closeReservation = document.getElementById('close-reservation');
+        const cancelReservation = document.getElementById('cancel-reservation');
+
+        function openReservationModal() {
+            reservationModal.classList.add('active');
+            overlay.classList.add('active');
+        }
+
+        function closeReservationModal() {
+            reservationModal.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        bookTableBtn.addEventListener('click', openReservationModal);
+        reserveMusicBtn.addEventListener('click', openReservationModal);
+        closeReservation.addEventListener('click', closeReservationModal);
+        cancelReservation.addEventListener('click', closeReservationModal);
+
+        // Reservation Form
+        document.getElementById('reservation-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('res-name').value,
+                email: document.getElementById('res-email').value,
+                phone: document.getElementById('res-phone').value,
+                date: document.getElementById('res-date').value,
+                time: document.getElementById('res-time').value,
+                guests: document.getElementById('res-guests').value,
+                special: document.getElementById('res-special').value
+            };
+            
+            showToast(`Table reserved for ${formData.name} on ${formData.date} at ${formData.time}!`);
+            closeReservationModal();
+            document.getElementById('reservation-form').reset();
+        });
+
+        // Contact Form
+        document.getElementById('contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            showToast('Message sent successfully! We will get back to you soon.');
+            document.getElementById('contact-form').reset();
+        });
+
+        // Newsletter Form
+        document.getElementById('newsletter-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            showToast('Thank you for subscribing to our newsletter!');
+            document.getElementById('newsletter-form').reset();
+        });
+
+        // Smooth Scrolling for Navigation Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && !this.hasAttribute('data-bs-toggle')) {
+                    e.preventDefault();
+                    
+                    const targetElement = document.querySelector(href);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+
+        // Header Scroll Effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.backgroundColor = 'rgba(44, 62, 80, 0.98)';
+            } else {
+                header.style.backgroundColor = 'rgba(44, 62, 80, 0.95)';
+            }
+        });
+
+        // Set minimum date for reservation (today)
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('res-date').setAttribute('min', today);
+
+        // Simulate real-time order updates
+        setInterval(() => {
+            const statusItems = document.querySelectorAll('.status-item');
+            statusItems.forEach(item => {
+                if (item.classList.contains('active') && Math.random() > 0.7) {
+                    item.classList.remove('active');
+                    item.classList.add('completed');
+                    const nextItem = item.nextElementSibling;
+                    if (nextItem) {
+                        nextItem.classList.add('active');
+                    }
+                }
+            });
+        }, 10000);
+    </script>
+</body>
+</html>
